@@ -1,50 +1,197 @@
 ---
+import ThemeToggle from '../components/ThemeToggle.astro';
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<header>
+			<nav>
+				<div class="nav-container">
+					<a href="/" class="site-title">Blog<span class="dot">.</span></a>
+					<div class="nav-links">
+						<a href="/blog">Posts</a>
+						<a href="/about">About</a>
+					</div>
+					<ThemeToggle/>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer>
+			<p>&copy; {new Date().getFullYear()} Your Name</p>
+		</footer>
 	</body>
 </html>
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--text-color: #1a1a1a;
+		--bg-color: #fafafa;
+		--accent-color: #ff5252;
+		--secondary-color: #666666;
+		--border-color: #e0e0e0;
+		--max-width: 680px;
+		--font-mono: 'Space Mono', monospace;
+		--font-sans: 'Space Grotesk', sans-serif;
 	}
+	/* Light theme (default) */
+    :root[data-theme="light"] {
+        --bg-color: #ffffff;
+        --text-color: #1c1c1c;
+        --secondary-color: #666666;
+        --accent-color: #ff5252;
+        --hover-bg: #f0f0f0;
+    }
+
+    /* Dark theme */
+    :root[data-theme="dark"] {
+        --bg-color: #1c1c1c;
+        --text-color: #ffffff;
+        --secondary-color: #a0a0a0;
+        --accent-color: #c1e33a;
+        --hover-bg: #2d2d2d;
+    }
+	
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+	
 	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
+		font-family: var(--font-sans);
+		background: var(--bg-color);
+		color: var(--text-color);
+		line-height: 1.6;
+		letter-spacing: -0.015em;
 	}
+
+	body {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
+
+	main {
+		flex: 1;
+		width: 100%;
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 4rem 1.5rem;
+	}
+
+	header {
+		padding: 2rem 0;
+	}
+
+	.nav-container {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.site-title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text-color);
+		text-decoration: none;
+		letter-spacing: -0.03em;
+	}
+
+	.site-title .dot {
+		color: var(--accent-color);
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.nav-links a {
+		color: var(--secondary-color);
+		text-decoration: none;
+		font-weight: 500;
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		transition: color 0.2s ease;
+	}
+
+	.nav-links a:hover {
+		color: var(--text-color);
+	}
+
+	footer {
+		text-align: center;
+		padding: 3rem 1.5rem;
+		color: var(--secondary-color);
+		font-size: 0.9rem;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		line-height: 1.2;
+		margin: 2em 0 0.5em;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		margin-top: 0;
+	}
+
+	p {
+		margin-bottom: 1.5em;
+	}
+
+	a {
+		color: var(--text-color);
+		text-decoration: none;
+		border-bottom: 1px solid var(--accent-color);
+		transition: border-color 0.2s ease;
+	}
+
+	a:hover {
+		border-color: var(--text-color);
+	}
+
 	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+		font-family: var(--font-mono);
 	}
 </style>
+<script>
+	const theme = (() => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')){
+			return localStorage.getItem('theme');
+		}
+
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches){
+			return 'dark'
+		}
+		return 'light';
+	}) ();
+	document.documentElement.setAttribute('data-theme', theme); 
+</script>

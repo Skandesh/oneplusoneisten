@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+---
+
+<Layout title="About Me">
+	<div class="about">
+		<h1>About<span class="dot">.</span></h1>
+		
+		<div class="content">
+			<p>Hi there! I'm a developer passionate about web technologies and creating meaningful digital experiences. This blog is where I share my thoughts, learnings, and experiences in the world of software development.</p>
+			
+			<h2>What I Write About</h2>
+			<ul>
+				<li>Web Development</li>
+				<li>Software Architecture</li>
+				<li>Developer Tools</li>
+				<li>Best Practices</li>
+			</ul>
+
+			<h2>Connect</h2>
+			<p>You can find me on:</p>
+			<ul class="social-links">
+				<li><a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+				<li><a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+				<li><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+			</ul>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.about {
+		max-width: 680px;
+		margin: 0 auto;
+	}
+
+	.dot {
+		color: var(--accent-color);
+	}
+
+	.content {
+		margin-top: 2rem;
+		font-size: 1.1rem;
+	}
+
+	h2 {
+		margin-top: 2.5rem;
+		font-size: 1.5rem;
+	}
+
+	ul {
+		margin: 1rem 0 2rem;
+		padding-left: 1.5rem;
+	}
+
+	.social-links {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.social-links a {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+	}
+</style>
