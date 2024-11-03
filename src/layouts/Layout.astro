@@ -25,10 +25,10 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 		<header>
 			<nav>
 				<div class="nav-container">
-					<a href="/" class="site-title">Blog<span class="dot">.</span></a>
+					<a href="/oneplusoneisten" class="site-title">Blog<span class="dot">.</span></a>
 					<div class="nav-links">
-						<a href="/blog">Posts</a>
-						<a href="/about">About</a>
+						<a href="/oneplusoneisten/blog">Posts</a>
+						<a href="/oneplusoneisten/about">About</a>
 					</div>
 					<ThemeToggle/>
 				</div>
@@ -193,5 +193,5 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 		}
 		return 'light';
 	}) ();
-	document.documentElement.setAttribute('data-theme', theme); 
+	document.documentElement.setAttribute('data-theme', theme?? 'light'); 
 </script>

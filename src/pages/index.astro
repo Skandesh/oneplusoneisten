@@ -25,14 +25,14 @@ const posts = (await getCollection('blog')).sort(
 						})}
 					</time>
 					<h3>
-						<a href={`/blog/${post.slug}`}>{post.data.title}</a>
+						<a href={`oneplusoneisten/blog/${post.slug}`}>{post.data.title}</a>
 					</h3>
 					<p>{post.data.description}</p>
 				</article>
 			))}
 		</div>
 		<div class="view-all">
-			<a href="/blog">View all posts</a>
+			<a href="/oneplusoneisten/blog">View all posts</a>
 		</div>
 	</section>
 </Layout>

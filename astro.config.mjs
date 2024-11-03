@@ -3,8 +3,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://yourusername.github.io',
-  base: '/',
+  site: 'https://skandesh.github.io/oneplusoneisten',
+  base: '/oneplusoneisten/',
   integrations: [mdx(), sitemap()],
   output: 'static',
   markdown: {
