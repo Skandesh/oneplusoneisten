@@ -3,12 +3,8 @@ import { getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-    console.log("##########fun called");
-    
+        
 	const posts = await getCollection('blog');
-    console.log("POSTSTSTSTTT", posts);
-    
-    console.log("POSTS RETURNED", posts);
     
 	return posts.map((post) => ({
 		params: { slug: post.slug },
