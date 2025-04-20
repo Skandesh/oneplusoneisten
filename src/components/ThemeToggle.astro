@@ -56,9 +56,9 @@
 </style>
 
 <script>
-    function getInitialTheme() {
+    function getInitialTheme(): string {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-            return localStorage.getItem('theme');
+            return localStorage.getItem('theme') || 'light';
         }
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             return 'dark';
@@ -66,7 +66,7 @@
         return 'light';
     }
 
-    function setTheme(theme) {
+    function setTheme(theme: string) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }
