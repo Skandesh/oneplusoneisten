@@ -14,7 +14,7 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/oneplusoneisten/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -207,16 +207,25 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 	}) ();
 	document.documentElement.setAttribute('data-theme', theme?? 'light'); 
 
+	// Make sure the progress bar is initialized and working even if DOMContentLoaded doesn't fire properly
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initProgressBar);
+	} else {
+		initProgressBar();
+	}
 
-	document.addEventListener('DOMContentLoaded', () => {
-		window.addEventListener('scroll', () => {
+	function initProgressBar() {
+		window.addEventListener('scroll', updateProgressBar);
+		// Initialize it right away
+		updateProgressBar();
+	}
+
+	function updateProgressBar() {
 		const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 		const scrolled = (window.scrollY / docHeight) * 100;
 		const progressBar = document.getElementById('progress-bar');
-      if (progressBar) {
-        progressBar.style.width = `${scrolled}%`;
-      }
-    });
-	})
-	
+		if (progressBar) {
+			progressBar.style.width = `${scrolled}%`;
+		}
+	}
 </script>
