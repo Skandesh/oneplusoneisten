@@ -25,7 +25,7 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 		<header>
 			<nav>
 				<div class="nav-container">
-					<a href="/oneplusoneisten" class="site-title">Blog<span class="dot">.</span></a>
+					<a href="/oneplusoneisten/" class="site-title">1+1=10<span class="dot">.</span></a>
 					<div class="nav-links">
 						<a href="/oneplusoneisten/blog">Posts</a>
 						<a href="/oneplusoneisten/about">About</a>
@@ -35,6 +35,7 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 			</nav>
 		</header>
 		<main>
+			<div id="progress-bar"></div>
 			<slot />
 		</main>
 		<footer>
@@ -181,6 +182,17 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 	code {
 		font-family: var(--font-mono);
 	}
+
+	#progress-bar {
+	position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background-color: var(--accent-color);
+    z-index: 9999;
+    transition: width 0.25s ease;
+}
 </style>
 <script>
 	const theme = (() => {
@@ -194,4 +206,11 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 		return 'light';
 	}) ();
 	document.documentElement.setAttribute('data-theme', theme?? 'light'); 
+
+
+	window.addEventListener('scroll', () => {
+		const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+		const scrolled = (window.scrollY / docHeight) * 100;
+		document.getElementById('progress-bar').style.width = `${scrolled}%`;
+	})
 </script>

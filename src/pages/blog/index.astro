@@ -23,7 +23,7 @@ const posts = (await getCollection('blog', ({ data }) => {
 						day: 'numeric',
 					})}
 				</time>
-				<h2><a href={`/blog/${post.slug}`}>{post.data.title}</a></h2>
+				<h2><a href={`/oneplusoneisten/blog/${post.slug}`}>{post.data.title}</a></h2>
 				<p>{post.data.description}</p>
 				{post.data.tags && (
 					<div class="tags">

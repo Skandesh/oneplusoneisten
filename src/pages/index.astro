@@ -25,7 +25,7 @@ const posts = (await getCollection('blog')).sort(
 						})}
 					</time>
 					<h3>
-						<a href={`oneplusoneisten/blog/${post.slug}`}>{post.data.title}</a>
+						<a href={`/oneplusoneisten/blog/${post.slug}`}>{post.data.title}</a>
 					</h3>
 					<p>{post.data.description}</p>
 				</article>
@@ -38,6 +38,7 @@ const posts = (await getCollection('blog')).sort(
 </Layout>
 
 <style>
+	
 	.intro {
 		margin-bottom: 5rem;
 	}
@@ -46,6 +47,13 @@ const posts = (await getCollection('blog')).sort(
 		font-size: 3rem;
 		line-height: 1.2;
 		font-weight: 500;
+	}
+
+	h1 .dot {
+		background: linear-gradient(45deg, var(--accent-color), var(--accent-color-2));
+    -webkit-background-clip: text;
+    
+	
 	}
 
 	.dot {
@@ -72,6 +80,11 @@ const posts = (await getCollection('blog')).sort(
 	.post-card {
 		display: grid;
 		gap: 0.5rem;
+		transition: transform 0.2s ease;
+	}
+
+	.post-card:hover {
+		transform: translateX(2px) translateZ(3px) translateY(-3px);
 	}
 
 	.post-card time {

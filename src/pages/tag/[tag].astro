@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+    const posts = await getCollection('blog', ({data}) => { return !data.draft});
+    const tags = [...new Set(posts.flatMap(post => post.data.tags || []))];
+    
+    return tags.map(tag => ({
+        params: { tag },
+        props: { 
+            posts: posts
+                .filter(post => post.data.tags?.includes(tag))
+                .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+        }
+    }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Posts tagged with #${tag}`}>
+    <div class="tag-header">
+        <h1>#{tag}<span class="dot">.</span></h1>
+        <p class="tag-description">{posts.length} post{posts.length === 1 ? '' : 's'}</p>
+    </div>
+    
+    <!-- Use the same post list layout as blog/index.astro -->
+</Layout>
