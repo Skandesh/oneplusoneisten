@@ -208,9 +208,15 @@ const { title, description = 'A minimal blog built with Astro' } = Astro.props;
 	document.documentElement.setAttribute('data-theme', theme?? 'light'); 
 
 
-	window.addEventListener('scroll', () => {
+	document.addEventListener('DOMContentLoaded', () => {
+		window.addEventListener('scroll', () => {
 		const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 		const scrolled = (window.scrollY / docHeight) * 100;
-		document.getElementById('progress-bar').style.width = `${scrolled}%`;
+		const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = `${scrolled}%`;
+      }
+    });
 	})
+	
 </script>
